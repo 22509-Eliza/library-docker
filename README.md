@@ -152,7 +152,4 @@ POSTGRES_PASSWORD: secret
 
 ---
 
-## Бележки
 
-- Приложението е **run-to-completion** (`restart: "no"`): стартира, показва резултатите и спира. Данните остават в PostgreSQL volume-а.
-- Ако искаш да го изпълниш отново: `docker compose start backend`.
