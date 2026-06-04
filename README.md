@@ -89,7 +89,7 @@ library-docker/
 
 ```bash
 # 1. Клонирай хранилището
-git clone https://github.com/YOUR_USERNAME/library-docker.git
+git clone https://github.com/22509-Eliza/library-docker.git
 cd library-docker
 
 # 2. Изгради образите и стартирай
@@ -134,22 +134,13 @@ docker exec -it library_db psql -U librarian -d library
 ### Публикуване на образа
 
 ```bash
-# Замени YOUR_USERNAME с твоето Docker Hub потребителско име
 docker login
 docker compose build
-docker push YOUR_USERNAME/library-backend:latest
+docker push 22509/library-backend:latest
 ```
 
 ---
 
-## Промяна на паролата (production)
 
-Редактирай `compose.yml` и смени:
-```yaml
-POSTGRES_PASSWORD: secret
-```
-и съответно в `DATABASE_URL` на `backend`.
-
----
 
 
