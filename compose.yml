@@ -1,0 +1,36 @@
+services:
+
+  # ── PostgreSQL database ──────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: library_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       library
+      POSTGRES_USER:     librarian
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - db_data:/var/lib/postgresql/data          # persistent storage
+      - ./db/init:/docker-entrypoint-initdb.d     # auto-run *.sql on first start
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U librarian -d library"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── C++ backend ─────────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: YOUR_DOCKERHUB_USERNAME/library-backend:latest   # <-- replace before push
+    container_name: library_backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "host=db port=5432 dbname=library user=librarian password=secret"
+    restart: "no"   # run-to-completion; set to on-failure for retry behaviour
+
+volumes:
+  db_data:

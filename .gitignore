@@ -1,0 +1,11 @@
+# Compiled binaries
+backend/*.exe
+backend/*.o
+backend/*.out
+backend/library_app
+
+# VS Code
+.vscode/
+
+# Docker volumes (local override)
+.env
